@@ -42,7 +42,22 @@ export default defineConfig({
 
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: isCI ? 'retain-on-failure' : 'off',
+
+    // ── Video (Playwright 1.63 native annotations) ──────────────────
+    // VIDEO=1 records every test and overlays what the test is doing:
+    //   show.actions  highlights each element the test interacts with, with
+    //                 the action title (click, fill, expect.toHaveText …)
+    //   show.test     shows the test title and the live test.step() stack
+    // Chapter and assertion cards are added by tests/support/video-narration.ts
+    // through page.screencast.showChapter() / showOverlay().
+    video: {
+      mode: process.env.VIDEO ? 'on' : isCI ? 'retain-on-failure' : 'off',
+      size: { width: 1280, height: 720 },
+      show: {
+        actions: { duration: 900, position: 'top-right', fontSize: 20, cursor: 'pointer' },
+        test: { level: 'step', position: 'top-left', fontSize: 16 },
+      },
+    },
 
     locale: 'en-US',
     testIdAttribute: 'data-testid',
