@@ -1,0 +1,22 @@
+{
+  "name": "playwright-tests-sf-tech-week-2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright E2E framework for https://storedemo.testdino.com, structured per the TestDino playwright-skill guides",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:login": "playwright test tests/auth/login.spec.ts",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.0.0",
+    "dotenv": "^17.0.0",
+    "typescript": "^5.0.0"
+  }
+}
