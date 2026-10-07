@@ -41,8 +41,17 @@ Three native pieces are combined (nothing is injected by hand):
 The `narrator` fixture is silent when video is off, so the same spec runs
 unchanged (and about four times faster) in a normal run.
 
-A recording of the checkout journey lives in `docs/demo/` (`checkout-journey.webm`
-is the raw Playwright output; the `.gif` is a lighter preview for pull requests).
+A recording of the checkout journey lives in `docs/demo/`: `checkout-journey.webm`
+is the raw Playwright output, `checkout-journey.mp4` is an H.264 copy that
+GitHub plays inline when dragged into a pull request description, and the
+`.gif` is a lighter autoplaying preview.
+
+Playwright's bundled ffmpeg only writes WebM, so the MP4 was made with a full
+ffmpeg build:
+
+```bash
+ffmpeg -i docs/demo/checkout-journey.webm -c:v libx264 -crf 24 -pix_fmt yuv420p -movflags +faststart -an docs/demo/checkout-journey.mp4
+```
 
 ### Browser note (macOS 13)
 
@@ -85,7 +94,7 @@ tests/
     demo-user.ts              Hard-coded checkout account + address, registered on first use
     store-workarounds.ts      Explicit, opt-in workarounds for demo-store defects
     video-narration.ts        Chapter and assertion cards for recorded videos
-docs/demo/                    Recorded checkout journey (.webm + .gif)
+docs/demo/                    Recorded checkout journey (.webm, .mp4, .gif)
 ```
 
 ## Skill rules applied, and where
